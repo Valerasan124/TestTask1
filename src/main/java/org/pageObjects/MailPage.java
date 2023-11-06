@@ -62,7 +62,7 @@ public class MailPage extends Base {
 
 
     /**
-     * Указываем ссылку на файл.
+     * Указываем ссылку на файл. И прикрепляем
      *
      * @param urlFile
      */
