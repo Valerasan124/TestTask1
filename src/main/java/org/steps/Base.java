@@ -18,6 +18,13 @@ public class Base {
     }
 
 
+    public String nowWindowHandle(){
+        String winHandleBefore = driver.getWindowHandle();
+
+        return winHandleBefore;
+    }
+
+
     public void click(WebElement element){
         waitVisiblyElements(element);
 
@@ -57,4 +64,7 @@ public class Base {
 
         return false;
     }
+
+
+
 }

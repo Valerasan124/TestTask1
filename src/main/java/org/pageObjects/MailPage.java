@@ -1,5 +1,6 @@
 package org.pageObjects;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +33,9 @@ public class MailPage extends Base {
     @FindBy(xpath = ".//div[@data-signature-widget='content']")
     WebElement signField;
 
+    @FindBy(xpath = ".//span[@title='Закрыть']")
+    WebElement closeButton;
+
 
     /**
      * Нажимаем кнопку "Написать письмо".
@@ -39,6 +43,16 @@ public class MailPage extends Base {
     public void clickWritLetterButton() {
         click(writLetterButton);
     }
+
+
+
+    public void assertMailForm(){
+        String xpath = ".//span[contains(text(),'Отправить')]";
+
+        Assert.assertTrue(waitVisiblyElements(xpath));
+    }
+
+
 
 
     /**
@@ -84,6 +98,14 @@ public class MailPage extends Base {
      */
     public void clickSendLetterButton(){
         click(sendLetterButton);
+    }
+
+
+    /**
+     * Кликаем по крестику всплывающего окна после отправки письма.
+     */
+    public void clickCloseButton(){
+        click(closeButton);
     }
 
 }
