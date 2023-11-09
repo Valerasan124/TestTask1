@@ -36,6 +36,12 @@ public class MailPage extends Base {
     @FindBy(xpath = ".//span[@title='Закрыть']")
     WebElement closeButton;
 
+    @FindBy(xpath = ".//input[@type='file' and @wfd-id='id2']")
+    WebElement attachFile;
+
+
+
+
 
     /**
      * Нажимаем кнопку "Написать письмо".
@@ -46,12 +52,14 @@ public class MailPage extends Base {
 
 
 
+    /**
+     * Проверяем наличие формы написания письма
+     */
     public void assertMailForm(){
         String xpath = ".//span[contains(text(),'Отправить')]";
 
         Assert.assertTrue(waitVisiblyElements(xpath));
     }
-
 
 
 
@@ -76,12 +84,11 @@ public class MailPage extends Base {
 
 
     /**
-     * Указываем ссылку на файл. И прикрепляем
-     *
-     * @param urlFile
+     * Прикрепляем файл к письму
+     * @param dir
      */
-    public void attachFile(String urlFile) {
-        setText(attachFileButton, urlFile);
+    public void setAttachFile(String dir){
+        super.attachFile(attachFile, dir);
     }
 
 

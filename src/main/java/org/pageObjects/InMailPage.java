@@ -18,6 +18,8 @@ public class InMailPage extends Base {
     @FindBy(xpath = ".//a[contains(@title, 'Входящие')]")
     WebElement incomingButton;
 
+
+
     /**
      * Проверяем что тема в письме соответствует указанно при отправке.
      *

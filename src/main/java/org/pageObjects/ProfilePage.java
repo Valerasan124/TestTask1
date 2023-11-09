@@ -86,7 +86,7 @@ public class ProfilePage extends Base {
 
 
     /**
-     * Вводим новый текст подписи
+     * Вводим новый текст подписи.
      *
      * @param textSign
      */
@@ -96,21 +96,32 @@ public class ProfilePage extends Base {
 
 
     /**
+     * Удаляем старую подпись после указания новой.
+     */
+    public void deletePreviousSign() {
+        super.sendKeys(signField);
+    }
+
+
+    /**
      * Кликаем на кнопку "Сохранить" в МО "Редактирование подписи"
      */
-    public void clickSaveButton(){
+    public void clickSaveButton() {
         click(saveButton);
     }
 
 
-
-    public void clickMailButton(){
+    /**
+     * Кликаем на кнопку почты
+     */
+    public void clickMailButton() {
         click(mailButton);
     }
 
 
     /**
      * Генерируем случайную последовательность букв для подписи.
+     *
      * @return
      */
     public static String randomSign() {

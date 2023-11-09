@@ -9,20 +9,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.pageObjects.*;
+import org.steps.Base;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class FullTestMail extends BaseDriverClass {
+    Base base = new Base();
+
     String mailToWhom = "valeriy.testmail@mail.ru";
     String subject = "Тема Письма";
     String subjectNew = "Новая тема письма";
-    String pathToFile = "C:\\testDoc.txt";
+    String absolutePath = base.getAbsolutePathFile("testDoc.txt");
     String textField = "Текст письма тест тест тест";
     String textFieldNew = "Текст письма после изменения подписи";
     String textSign = ProfilePage.randomSign();
+
 
 
     @Test
@@ -33,8 +38,7 @@ public class FullTestMail extends BaseDriverClass {
 
         BasePage basePage = new BasePage(getDriver());
 
-        basePage.clickButtonEnterInMail();
-        basePage.waitVisiblyElements(".//iframe[contains(@src,'https://acc')]");
+        basePage.clickEnterInMailButton();
         getDriver().switchTo().frame(basePage.fr1);
         basePage.setAccInUserNameField();
         basePage.clickButtonEnterPass();
@@ -49,7 +53,7 @@ public class FullTestMail extends BaseDriverClass {
         mailPage.assertMailForm();
         mailPage.setFieldToWhom(mailToWhom);
         mailPage.setFieldSubject(subject);
-        getDriver().findElement(By.xpath(".//input[@wfd-id=\"id2\"]")).sendKeys(pathToFile);
+        mailPage.setAttachFile(absolutePath);
         mailPage.setTextField(textField);
         mailPage.clickSendLetterButton();
         mailPage.clickCloseButton();
@@ -74,27 +78,13 @@ public class FullTestMail extends BaseDriverClass {
         profilePage.clickPersonalDataButton();
         profilePage.clickAllSettingsButton();
 
-
-        Set<String> handles = driver.getWindowHandles();
-        if (handles.size() == 2) {
-            Iterator<String> itr = handles.iterator();
-
-            String parent_window = itr.next().toString();
-            String child_window = itr.next().toString();
-            System.out.println(parent_window);
-            System.out.println(child_window);
-
-            driver.switchTo().window(child_window);
-        }
-
+        //Переводим фокус на новую вкладку
+        basePage.moveToNextTab(1);
 
         profilePage.clickNameSignButton();
         profilePage.clickEditButton();
         profilePage.setSignField(textSign);
-
-        driver.findElement(By.xpath(".//div[@contenteditable='true']/div"))
-                .sendKeys(Keys.LEFT_SHIFT, Keys.END, Keys.DELETE);
-
+        profilePage.deletePreviousSign();
         profilePage.clickSaveButton();
         profilePage.clickMailButton();
 
@@ -103,7 +93,7 @@ public class FullTestMail extends BaseDriverClass {
         mailPage.assertMailForm();
         mailPage.setFieldToWhom(mailToWhom);
         mailPage.setFieldSubject(subjectNew);
-        getDriver().findElement(By.xpath(".//input[@wfd-id=\"id2\"]")).sendKeys(pathToFile);
+        mailPage.setAttachFile(absolutePath);
         mailPage.setTextField(textFieldNew);
         mailPage.clickSendLetterButton();
         mailPage.clickCloseButton();
