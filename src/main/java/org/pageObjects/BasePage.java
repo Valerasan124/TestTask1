@@ -17,7 +17,7 @@ public class BasePage extends Base {
     }
 
     @FindBy(xpath = ".//button[contains(text(),'Войти')]")
-    WebElement buttonEnterInMail;
+    WebElement EnterInMailbutton;
 
     @FindBy(xpath = ".//input[@name='username']")
     WebElement userNameField;
@@ -42,8 +42,8 @@ public class BasePage extends Base {
     /**
      * Кликаем на кнопку войти в почту.
      */
-    public void clickButtonEnterInMail() {
-        click(buttonEnterInMail);
+    public void clickEnterInMailButton() {
+        click(EnterInMailbutton);
     }
 
 
